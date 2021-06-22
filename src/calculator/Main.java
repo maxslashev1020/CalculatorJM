@@ -24,6 +24,7 @@ public class Main {
         String input = inputValueSC.nextLine();
         Operation values;
 
+
         while (!input.isEmpty()) {
             String[] parser_input = Main.pars(input);
             String operation = parser_input[1];
@@ -33,28 +34,34 @@ public class Main {
             try {
                 value1 = Integer.parseInt(parser_input[0]);
                 value2 = Integer.parseInt(parser_input[2]);
-                //values = new Arabic(value1, value2, 0);
             } catch (NumberFormatException e) {
                 arabic_numbers = false;
                 System.out.println("Введены римские цифры");
-                //values = new Romes(parsed_input[0], parsed_input[2], 0);
-            }
-            if ((value1 < 1 || value1 > 10) || (value2 < 1 || value2 > 10)) {
-                throw new IllegalArgumentException("Введены некорректные данные");
             }
 
+
             if (arabic_numbers) {
+                if ((value1 < 1 || value1 > 10) || (value2 < 1 || value2 > 10)){
+                    throw new IllegalArgumentException("Введены некорректные данные");
+                }
                 values = new Arabic(value1, value2);
             } else {
+
                 values = new Rome(parser_input[0], parser_input[2]);
+                if (( ((Rome) values).romesValue1Int < 1 || ((Rome) values).romesValue1Int > 10)
+                        || (((Rome) values).romesValue2Int< 1 || ((Rome) values).romesValue2Int > 10)){
+                    throw new IllegalArgumentException("Введены некорректные данные");
+                }
             }
+
+
 
             if (operation.equals("+")) {
                 values.sum();
             } else if (operation.equals("-")) {
                 values.sub();
             } else if (operation.equals("/") || operation.equals(":")) {
-                values.sub();
+                values.div();
             } else if (operation.equals("*") || operation.equals("x")) {
                 values.mul();
             }

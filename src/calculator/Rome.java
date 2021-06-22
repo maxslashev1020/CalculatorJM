@@ -3,8 +3,8 @@ package calculator;
 public class Rome extends Operation {
     private String romesValue1;
     private String romesValue2;
-    private int romesValue1Int;
-    private int romesValue2Int;
+    int romesValue1Int;
+    int romesValue2Int;
     private int resultInt;
     private String sign = "";
     private String resultString;
