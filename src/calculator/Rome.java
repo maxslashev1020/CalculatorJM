@@ -16,45 +16,60 @@ public class Rome extends Operation {
         this.romesValue1Int = convert_to_int(romesValue1);
         this.romesValue2Int = convert_to_int(romesValue2);
     }
-    private String convert_result_to_Romes(int n, int ostatok) {
-        ostatok = n % 10;
-        if (ostatok != 0) {
-            try {
-                return convert_result_to_Romes(n - ostatok, 0) + romeFigures[ostatok - 1];
-            } catch (ArrayIndexOutOfBoundsException e) {
-                sign = "-";
-                return convert_result_to_Romes(n - ostatok, 0) + romeFigures[(ostatok + 1) * -1];
-            }
+    private String convert_result_to_Romes(int resultInt) {
+        String s = "";
+        if (resultInt < 0){
+            s="-";
+            resultInt *= -1;
         }
-        //Возможность вывести отрицательное римское число
-        if (n > 0) {
-            n = n - 10;
-            return convert_result_to_Romes(n,0) + "X";
-        } else if (n < 0) {
-            n = n + 10;
-            return convert_result_to_Romes(n,0) + "X";
-        }   else {
-            return sign;
+        while (resultInt >= 100) {
+            s += "C";
+            resultInt -= 100;
         }
+        while (resultInt >= 50) {
+            s += "L";
+            resultInt -= 50;
+        }
+        while (resultInt >= 10) {
+            s += "X";
+            resultInt -= 10;
+        }
+        while (resultInt >= 9) {
+            s += "IX";
+            resultInt -= 9;
+        }
+        while (resultInt >= 5) {
+            s += "V";
+            resultInt -= 5;
+        }
+        while (resultInt >= 4) {
+            s += "IV";
+            resultInt -= 4;
+        }
+        while (resultInt >= 1) {
+            s += "I";
+            resultInt -= 1;
+        }
+        return s;
     }
 
     @Override
     public void sum() {
         resultInt = romesValue1Int + romesValue2Int;
-        resultString = convert_result_to_Romes(resultInt, resultInt);
+        resultString = convert_result_to_Romes(resultInt);
     }
 
     @Override
     public void sub() {
         resultInt = romesValue1Int - romesValue2Int;
-        resultString = convert_result_to_Romes(resultInt, resultInt);
+        resultString = convert_result_to_Romes(resultInt);
     }
 
     @Override
     public void div() {
         try {
             resultInt = romesValue1Int / romesValue2Int;
-            resultString = convert_result_to_Romes(resultInt, resultInt);
+            resultString = convert_result_to_Romes(resultInt);
         } catch (ArithmeticException e) {
             System.out.print("Проверьте правильность ввода римских цифр. Вероятно введены и арабские и римские одновременно. ");
             return;
@@ -65,7 +80,7 @@ public class Rome extends Operation {
     @Override
     public void mul() {
         resultInt = romesValue1Int * romesValue2Int;
-        resultString = convert_result_to_Romes(resultInt, resultInt);
+        resultString = convert_result_to_Romes(resultInt);
     }
 
     @Override
